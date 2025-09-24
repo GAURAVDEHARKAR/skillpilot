@@ -3,7 +3,7 @@ import { HomeView } from "@/modules/home/ui/views/home-view";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
-// http://localhost:3000
+
 
 const Page = async () => {
 const session =await auth.api.getSession({
