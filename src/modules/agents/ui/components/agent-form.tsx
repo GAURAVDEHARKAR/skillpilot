@@ -3,7 +3,7 @@ import { useTRPC } from "@/trpc/client";
 import { AgentGetOne } from "../../types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
-import { agentInsertSchema } from "../../schema";
+import { agentsInsertSchema } from "../../schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Button } from "@/components/ui/button";
@@ -41,6 +41,24 @@ export const AgentForm = ({
                 trpc.agents.getMany.queryOptions({}),
             );
 
+            // TODO: Invalidate free tier usage
+            onSuccess?.();
+        },
+        onError: (error) => {
+            toast.error(error.message);
+
+            // TODO: Check if error code is "FORBIDEN", redirect to "/upgrade"
+        },
+    }),
+   );
+
+   const updateAgent = useMutation(
+    trpc.agents.update.mutationOptions({
+        onSuccess: async () => {
+            await queryClient.invalidateQueries(
+                trpc.agents.getMany.queryOptions({}),
+            );
+
             if (initialValues?.id) {
                 await queryClient.invalidateQueries(
                     trpc.agents.getOne.queryOptions({ id: initialValues.id })
@@ -56,8 +74,8 @@ export const AgentForm = ({
     }),
    );
 
-   const form = useForm<z.infer<typeof agentInsertSchema>>({
-    resolver: zodResolver(agentInsertSchema),
+   const form = useForm<z.infer<typeof agentsInsertSchema>>({
+    resolver: zodResolver(agentsInsertSchema),
     defaultValues: {
         name: initialValues?.name ?? "",
         instructions: initialValues?.instructions ?? "",
@@ -65,11 +83,11 @@ export const AgentForm = ({
    });
 
    const isEdit = !!initialValues?.id;
-   const isPending = createAgent.isPending;
+   const isPending = createAgent.isPending || updateAgent.isPending;
 
-   const onSubmit = (values: z.infer<typeof agentInsertSchema>) => {
+   const onSubmit = (values: z.infer<typeof agentsInsertSchema>) => {
     if (isEdit) {
-        console.log("TODO: updateAgent")
+        updateAgent.mutate({...values, id: initialValues.id });
     } else {
         createAgent.mutate(values);
     }
