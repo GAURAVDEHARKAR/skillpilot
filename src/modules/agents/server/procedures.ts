@@ -2,7 +2,7 @@ import { z } from "zod";
 import { db } from "@/db";
 import { agents } from "@/db/schema";
 import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
-import { agentsInsertSchema, agentsUpdateSchema } from "../schema";
+import { agentsInsertSchema, agentsUpdateSchema } from "../schemas";
 import { and, count, desc, eq, getTableColumns, ilike, sql } from "drizzle-orm";
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE, MAX_PAGE_SIZE, MIN_PAGE_SIZE } from "@/constants";
 import { TRPCError } from "@trpc/server";
@@ -130,7 +130,7 @@ export const agentsRouter = createTRPCRouter({
     create: protectedProcedure
       .input(agentsInsertSchema)
       .mutation(async ({ input, ctx }) => {
-         const [createAgent] = await db
+         const [createdAgent] = await db
            .insert(agents)
            .values({
             ...input,
@@ -138,6 +138,6 @@ export const agentsRouter = createTRPCRouter({
            })
            .returning();
 
-           return createAgent;
+           return createdAgent;
       }),
 });
