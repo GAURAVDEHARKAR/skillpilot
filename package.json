@@ -15,6 +15,7 @@
     "@dicebear/collection": "^9.2.4",
     "@dicebear/core": "^9.2.4",
     "@hookform/resolvers": "^5.2.2",
+    "@inngest/agent-kit": "^0.13.2",
     "@neondatabase/serverless": "^1.0.0",
     "@radix-ui/react-accordion": "^1.2.12",
     "@radix-ui/react-alert-dialog": "^1.1.15",
@@ -43,7 +44,7 @@
     "@radix-ui/react-toggle-group": "^1.1.11",
     "@radix-ui/react-tooltip": "^1.2.8",
     "@stream-io/node-sdk": "^0.4.24",
-    "@stream-io/openai-realtime-api": "^0.2.0",
+    "@stream-io/openai-realtime-api": "^0.1.4",
     "@stream-io/video-react-sdk": "^1.18.0",
     "@tanstack/react-query": "^5.76.1",
     "@tanstack/react-table": "^8.21.3",
@@ -61,7 +62,9 @@
     "embla-carousel-react": "^8.6.0",
     "framer-motion": "^12.23.22",
     "humanize-duration": "^3.33.1",
+    "inngest": "^4.2.1",
     "input-otp": "^1.4.2",
+    "jsonl-parse-stringify": "^1.0.3",
     "lucide-react": "^0.544.0",
     "nanoid": "^5.1.6",
     "next": "15.3.2",
@@ -79,7 +82,7 @@
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.3.1",
     "vaul": "^1.1.2",
-    "zod": "^3.25.7"
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
